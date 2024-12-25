@@ -1,12 +1,8 @@
 package com.example.reportit;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,14 +21,4 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
-
-    public void btClick(View view){
-
-        if(findViewById(R.id.btregister)==view){
-            Intent intent = new Intent(MainActivity.this, regActivity2.class );
-            startActivity(intent);
-        }
-    }
-
-
 }

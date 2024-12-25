@@ -54,7 +54,6 @@
             android:background="@drawable/btlogin"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            android:onClick="btClick"
             android:text="Login" />
 
         <Button
@@ -64,7 +63,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/btlogin"
-            android:onClick="btClick"
+
             android:text="Register" />
     </LinearLayout>
 

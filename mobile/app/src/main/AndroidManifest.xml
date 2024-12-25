@@ -13,9 +13,6 @@
         android:theme="@style/Theme.ReportIt"
         tools:targetApi="31">
         <activity
-            android:name=".regActivity2"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
