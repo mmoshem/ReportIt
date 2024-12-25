@@ -2,6 +2,7 @@ package com.example.reportit;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +22,14 @@ public class MainActivityReg extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
     }
     public void Register(View view){
-        
+        String name = ((EditText)findViewById(R.id.editTextName)).getText().toString();
+        String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString();
+        String Phone = ((EditText)findViewById(R.id.editTextPhone)).getText().toString();
+
+
+
     }
 }
