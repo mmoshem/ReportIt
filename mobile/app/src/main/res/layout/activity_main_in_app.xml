@@ -10,15 +10,20 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
+        android:background="#5EA1D5"
+        app:tabIndicator="@color/white"
+        app:tabSelectedTextColor="#0F31F4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Report It!" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My reports" />
@@ -26,7 +31,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+        android:id="@+id/framelayout"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
