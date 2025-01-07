@@ -34,5 +34,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, MainActivityReg.class );
             startActivity(intent);
         }
+        if(findViewById(R.id.btLogin)==view){
+            Intent intent = new Intent(MainActivity.this, MainActivityInApp.class );
+            startActivity(intent);
+        }
     }
 }
