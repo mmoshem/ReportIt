@@ -28,11 +28,11 @@ public class FragmentHistory extends Fragment {
     private String mParam1;
     private String mParam2;
 
-//    private ArrayList<DataModel> dataSet;
-//    private RecyclerView recyclerView;
-//    private LinearLayoutManager layoutManager;
-//    private CustomeAdapter adapter;
-//
+    private ArrayList<DataModel> dataSet;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private CustomeAdapter adapter;
+
     public FragmentHistory() {
         // Required empty public constructor
     }
