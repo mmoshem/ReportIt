@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navgraph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/fragmentReportit">
 
+    <fragment
+        android:id="@+id/fragmentHistory"
+        android:name="com.example.reportit.FragmentHistory"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_fragmentHistory_to_fragmentReportit"
+            app:destination="@id/fragmentReportit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentReportit"
+        android:name="com.example.reportit.FragmentReportit"
+        android:label="fragment_reportit"
+        tools:layout="@layout/fragment_reportit" >
+        <action
+            android:id="@+id/action_fragmentReportit_to_fragmentHistory"
+            app:destination="@id/fragmentHistory" />
+    </fragment>
 </navigation>
