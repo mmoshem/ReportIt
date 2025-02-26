@@ -1,0 +1,24 @@
+#blazor-error-ui {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+}

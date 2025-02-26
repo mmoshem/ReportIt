@@ -1,0 +1,30 @@
+﻿@page "/manager-panel"
+@rendermode InteractiveServer
+
+<PageTitle>Manger Panel</PageTitle>
+
+<ReportsViewer @ref="reportsViewer" Reports="@m_Reports" IsManager="@true"/>
+
+@if(!string.IsNullOrEmpty(m_ErrorMessage))
+{
+	<p class="text-danger">@m_ErrorMessage</p>
+}
+
+@code
+{
+	private List<Report> m_Reports;
+	private ReportsViewer reportsViewer;
+	private string m_ErrorMessage = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			m_Reports = await FireStoreDB.Instance.GetAllReportsAsync();
+		}
+		catch(Exception e)
+		{
+			m_ErrorMessage = e.Message;
+		}
+	}
+}

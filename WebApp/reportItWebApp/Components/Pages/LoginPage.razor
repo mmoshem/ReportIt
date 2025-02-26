@@ -1,0 +1,110 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<div class="card shadow-sm" style="width: 350px;">
+	<div class="card-header bg-primary text-white text-center">
+		<h4 class="mb-0">Login</h4>
+	</div>
+	<div class="card-body">
+		<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+			<DataAnnotationsValidator />
+			<ValidationSummary class="alert alert-danger" />
+
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<InputText id="email" @bind-Value="loginModel.Email" class="form-control" />
+				<ValidationMessage For="@(() => loginModel.Email)" class="text-danger" />
+			</div>
+
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label>
+				<InputText id="password" type="password" @bind-Value="loginModel.Password" class="form-control" />
+				<ValidationMessage For="@(() => loginModel.Password)" class="text-danger" />
+			</div>
+
+			@if (!string.IsNullOrEmpty(message))
+			{
+				<div class="alert @(message == "Login successful!" ? "alert-success" : "alert-danger")">
+					@message
+				</div>
+			}
+
+			<button type="submit" class="btn btn-primary w-100">Login</button>
+		</EditForm>
+	</div>
+</div>
+
+@code {
+	private LoginModel loginModel = new LoginModel();
+	private string message = string.Empty;
+
+	private async void HandleLogin()
+	{
+		try
+		{
+			if (string.IsNullOrEmpty(loginModel.Email) || string.IsNullOrEmpty(loginModel.Password))
+			{
+				message = "Please fill all fields";
+				return;
+			}
+
+			User user = await FireStoreDB.Instance.GetUserByEmailAsync(loginModel.Email);
+
+			if (user == null)
+			{
+				message = "Invalid username or password";
+				return;
+			}
+
+			user.Email = loginModel.Email;
+			if (user.Password == loginModel.Password)
+			{
+				message = "Login successful!";
+				validateUserAndNavigate(user);
+			}
+			else
+			{
+				message = "Invalid password!";
+			}
+		}
+		catch (HttpRequestException e)
+		{
+			message = $"Invalid Email:{Environment.NewLine + e.Message}";
+		}
+		catch (Exception e)
+		{
+			message = e.Message;
+
+		}
+
+		StateHasChanged();
+	}
+
+	private void validateUserAndNavigate(User i_User)
+	{
+
+		if (i_User.Role == "Admin")
+		{
+			NavigationManager.NavigateTo("/admin-panel");
+		}
+		else if (i_User.Role == "Handler")
+		{
+			NavigationManager.NavigateTo($"/handler-panel/{i_User.Email}");
+		}
+		else if (i_User.Role == "Manager")
+		{
+			NavigationManager.NavigateTo("/manager-panel");
+		}
+		else
+		{
+			message = "You don't have a permission to login!";
+		}
+	}
+
+	private class LoginModel
+	{
+		public string Email { get; set; } = string.Empty;
+		public string Password { get; set; } = string.Empty;
+	}
+}

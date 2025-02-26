@@ -1,0 +1,135 @@
+﻿@page "/admin-panel"
+@rendermode InteractiveServer
+
+<PageTitle>ReportIt Admin Panel</PageTitle>
+
+<div class="bg-transparent">
+	<div class="mb-3">
+		<label for="roleFilter">Filter by Role:</label>
+		<select id="roleFilter" @bind="selectedRole" class="form-select">
+			<option value="">All</option>
+			@foreach (string role in m_Users.Select(u => u.Role).Distinct())
+			{
+				<option value="@role">@role</option>
+			}
+		</select>
+	</div>
+
+	<table class="table-container modern-table table-title  ">
+		<thead>
+			<tr>
+				<th>Email</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Role</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (User user in m_Users.Where(u => string.IsNullOrEmpty(selectedRole) || u.Role == selectedRole))
+			{
+				<tr class="@(m_SelectedUser == user ? "table-active" : "")" @onclick="() => SelectUser(user)">
+					<td>@user.Email</td>
+					<td>@user.FirstName</td>
+					<td>@user.LastName</td>
+					<td>@user.Role</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div class="row mt-lg-3 border-3 ">
+	<div class="col">
+		<AddUserComponent @ref="userComponent" OnDataAdded="updateTable" />
+	</div>
+	<div class="col">
+
+		<button class="btn btn-danger" @onclick=ShowConfirmationDialog>Delete User</button>
+		@if(!string.IsNullOrEmpty(m_DeleteMessage))
+		{
+			<p class ="text-danger">@m_DeleteMessage</p>
+		}
+		<ConfirmationDialog @ref="confirmDialog" />
+	</div>
+</div>
+
+@if (!string.IsNullOrEmpty(m_ErrorMessage))
+{
+	<p class="text-danger fw-bold text-center">@m_ErrorMessage</p>
+}
+
+@code
+{
+	private List<User> m_Users = new List<User>();
+	private User m_NewUser = new User();
+	private string m_ErrorMessage = string.Empty;
+	private string m_DeleteMessage = string.Empty;
+	private string selectedRole = string.Empty;
+	private User m_SelectedUser;
+	AddUserComponent userComponent;
+	ConfirmationDialog confirmDialog;
+
+
+	protected override Task OnInitializedAsync()
+	{
+		updateTable();
+		return base.OnInitializedAsync();
+	}
+
+	private async void updateTable()
+	{
+
+		try
+		{
+			m_Users = await FireStoreDB.Instance.GetAllUsersAsync();
+			StateHasChanged();
+		}
+		catch (Exception e)
+		{
+			m_ErrorMessage = e.Message;
+		}
+	}
+
+	public void SelectUser(User i_User)
+	{
+		if (m_SelectedUser == i_User)
+		{
+			m_SelectedUser = null;
+		}
+		else
+		{
+			m_SelectedUser = i_User;
+			m_DeleteMessage = string.Empty;
+		}
+	}
+
+	public void ShowConfirmationDialog()
+	{
+		if(m_SelectedUser == null)
+		{
+			m_DeleteMessage = "no user has been slected!.";
+		}
+		else
+		{
+			m_DeleteMessage = string.Empty;
+			confirmDialog.Message = $"Are you sure you want to delete {m_SelectedUser.Email} user?";
+			confirmDialog.OnConfirm += deleteSelectedUser;
+			confirmDialog.Show();
+		}
+	}
+
+	private async void deleteSelectedUser()
+	{
+		try
+		{
+			await FireStoreDB.Instance.DeleteUserAsync(m_SelectedUser.Email);
+			updateTable();
+			m_ErrorMessage = string.Empty;
+			m_SelectedUser = null;
+		}
+		catch(Exception e)
+		{
+			m_ErrorMessage = e.Message;
+		}
+	}
+}

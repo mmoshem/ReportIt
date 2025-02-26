@@ -1,0 +1,32 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div id="map"></div>
+@code
+{
+	private bool m_IsMapInitialized = false;
+
+	[Parameter]
+	public double Latitude { get; set; } = 32.0154343710514;
+
+	[Parameter]
+	public double Longitude { get; set; } = 34.78419324663587;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if(firstRender && !m_IsMapInitialized)
+		{
+			await JSRuntime.InvokeVoidAsync("initializeMap", Latitude, Longitude);
+			m_IsMapInitialized = true;
+		}
+	}
+
+	public async Task ClearAllMarkers()
+	{
+		await JSRuntime.InvokeVoidAsync("clearMarkers");
+	}
+
+	public async Task AddMarker(double i_Latitude, double i_Longitude, string i_PopupText)
+	{
+		await JSRuntime.InvokeVoidAsync("addMarker", i_Latitude, i_Longitude, i_PopupText);
+	}
+}
