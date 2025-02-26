@@ -1,0 +1,35 @@
+﻿@page "/handler-panel/{HandlerEmail}"
+@rendermode InteractiveServer
+
+<PageTitle>Handler Panel</PageTitle>
+<ReportsViewer @ref="m_ReportsViewer" Reports="m_HandlerReports" />
+
+@code
+{
+	private ReportsViewer m_ReportsViewer;
+	private List<Report> m_HandlerReports = new List<Report>();
+	private string m_ErrorMessage = string.Empty;
+
+	[Parameter]
+	public string HandlerEmail{ get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		List<Report> allReports;
+		try
+		{
+			allReports = await FireStoreDB.Instance.GetAllReportsAsync();
+			foreach(Report report in allReports)
+			{
+				if(report.HandlerEmail == this.HandlerEmail)
+				{
+					m_HandlerReports.Add(report);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			m_ErrorMessage = e.Message;
+		}
+	}
+}

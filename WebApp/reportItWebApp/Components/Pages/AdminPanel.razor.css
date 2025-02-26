@@ -1,0 +1,176 @@
+﻿/* Base typography */
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #334155;
+}
+
+/* Table container */
+.table-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    border-radius: 1rem;
+    background: #ffffff;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(147, 171, 219, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+    .table-container:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(147, 171, 219, 0.12);
+    }
+
+/* Table wrapper for scrolling */
+.table-wrapper {
+    max-height: 300px; /* Height for 5 rows (approximate) */
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    position: relative;
+}
+
+/* Table title */
+.table-title {
+    text-align: center;
+    color: #1e40af;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.025em;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+    .table-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #1e40af, #60a5fa);
+        border-radius: 2px;
+    }
+
+/* Modern table */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+    /* Table header */
+    .modern-table thead {
+        background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .modern-table th {
+        padding: 1rem 1.25rem;
+        text-align: center;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+        color: #1e3a8a;
+        border-bottom: 2px solid #c7d2fe;
+        white-space: nowrap;
+    }
+
+    /* Table body */
+    .modern-table tbody {
+        background: #ffffff;
+    }
+
+    .modern-table td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
+    }
+
+    .modern-table tbody tr {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .modern-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Improved alternating row colors with higher contrast */
+        .modern-table tbody tr:nth-child(even) {
+            background: #eef2ff; /* Lighter purple-blue */
+        }
+
+        .modern-table tbody tr:nth-child(odd) {
+            background: #ffffff; /* Pure white for maximum contrast */
+        }
+
+        .modern-table tbody tr:hover {
+            background: #dbeafe; /* Light blue on hover */
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+/* More distinct active state */
+.table-active {
+    background-color: #bfdbfe !important; /* Brighter blue background */
+    border-left: 4px solid #2563eb !important; /* Thicker, more vibrant border */
+    color: #1e3a8a; /* Darker text for better readability */
+    font-weight: 500; /* Slightly bolder text */
+    transition: all 0.2s ease-in-out;
+}
+
+    .table-active:hover {
+        background-color: #93c5fd !important; /* Even brighter on hover */
+        transform: translateX(2px);
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2); /* Blue-tinted shadow */
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-container {
+        width: 95%;
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .table-title {
+        font-size: 1.25rem;
+    }
+
+    .modern-table th,
+    .modern-table td {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Scrollbar styling */
+.table-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #a5b4fc;
+    border-radius: 5px;
+}
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #818cf8;
+    }

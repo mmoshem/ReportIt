@@ -1,0 +1,93 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="text-center">Add User</h3>
+					<EditForm Model="newUser" OnValidSubmit="AddUser">
+						<DataAnnotationsValidator />
+						<div>
+							<label>Email:</label>
+							<InputText @bind-Value="newUser.Email" class="form-control" />
+							<ValidationMessage For="() => newUser.Email" />
+						</div>
+						<div>
+							<label>First Name:</label>
+							<InputText @bind-Value="newUser.FirstName" class="form-control" />
+							<ValidationMessage For="() => newUser.FirstName" />
+						</div>
+						<div>
+							<label>Last Name:</label>
+							<InputText @bind-Value="newUser.LastName" class="form-control" />
+							<ValidationMessage For="() => newUser.LastName" />
+						</div>
+						<div>
+							<label>Role:</label>
+							<InputSelect @bind-Value="newUser.Role" class="form-control">
+								<option value="">Select a role</option>
+								<option value="Admin">Admin</option>
+								<option value="Handler">Handler</option>
+								<option value="Manager">Manager</option>
+								<option value="Reporter">Reporter</option>
+							</InputSelect>
+							<ValidationMessage For="() => newUser.Role" />
+						</div>
+						<div>
+							<label>Password:</label>
+							<InputText @bind-Value="newUser.Password" Type="password" class="form-control" />
+							<ValidationMessage For="() => newUser.Password" />
+						</div>
+						<div class="mt-1">
+							<button type="submit" class="btn btn-primary">Add User</button>
+						</div>
+						@if (!string.IsNullOrEmpty(message))
+						{
+							<div class="alert alert-danger">@message</div>
+						}
+					</EditForm>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	private List<User> users = new List<User>();
+	private User newUser = new User();
+	private string message;
+
+	public List<User> UsersList
+	{
+		get
+		{
+			return users;
+		}
+	}
+
+	[Parameter]
+	public EventCallback OnDataAdded { get; set; }
+
+	private async void AddUser()
+	{
+		try
+		{
+			bool isSuccesfull = await FireStoreDB.Instance.PostUserAsync(newUser);
+
+			if(isSuccesfull)
+			{
+				newUser = new User();
+				await OnDataAdded.InvokeAsync();
+			}
+			else
+			{
+				message = "Something went wrong";
+			}
+
+		}catch(Exception e)
+		{
+			message = e.Message;
+		}
+	}
+}

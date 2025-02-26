@@ -1,0 +1,67 @@
+﻿@if (m_IsVisible && SelectedReport != null)
+{
+	<div>
+		<InputSelect @bind-Value="@SelectedReport.HandlerEmail" class="form-select w-auto">
+			<option value="">Select Handler</option>
+			@foreach (User handler in m_Handlers)
+			{
+				<option value="@handler.Email">@handler.FirstName @handler.LastName</option>
+			}
+		</InputSelect>
+	</div>
+}
+
+@code
+{
+	private bool m_IsFirstTime = true;
+	private static List<User> m_Handlers = new List<User>();
+	private string m_ErrorMessage = string.Empty;
+	private bool m_IsVisible = true;
+
+	[Parameter]
+	public Report SelectedReport { get; set; }
+
+	protected override Task OnInitializedAsync()
+	{
+		if (m_IsFirstTime)
+		{
+			try
+			{
+				m_Handlers.Clear();
+				getHandlerUsers();
+				m_IsFirstTime = false;
+			}
+			catch (Exception e)
+			{
+				m_ErrorMessage = e.Message;
+			}
+		}
+
+		return base.OnInitializedAsync();
+	}
+
+	private async void getHandlerUsers()
+	{
+		List<User> allUsers = await FireStoreDB.Instance.GetAllUsersAsync();
+
+		foreach (User user in allUsers)
+		{
+			if (user.Role == "Handler")
+			{
+				m_Handlers.Add(user);
+			}
+		}
+	}
+
+	public void Show()
+	{
+		m_IsVisible = true;
+		StateHasChanged();
+	}
+
+	public void Hide()
+	{
+		m_IsVisible = false;
+		StateHasChanged();
+	}
+}

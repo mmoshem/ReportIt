@@ -1,0 +1,45 @@
+﻿@inject IJSRuntime JS
+
+@if (m_IsVisble)
+{
+	<div class="toast-container p-3 d-block" data-bs-autohide="true" data-bs-delay="5000">
+		<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<strong class="me-auto">Confirmation</strong>
+			</div>
+			
+			<div class="toast-body">
+				<p>@Message</p>
+			</div>
+
+			<div class="button-group">
+				<button class="btn btn-danger" @onclick="Confirm">Yes</button>
+				<button class="btn btn-secondary" @onclick="Cancel">No</button>
+			</div>
+		</div>
+	</div>
+}
+@code {
+	private bool m_IsVisble = false;
+	public event Action OnConfirm;
+	public string Message { get; set; }
+
+	public void Show()
+	{
+		m_IsVisble = true;
+		StateHasChanged();
+	}
+
+	private void Confirm()
+	{
+		m_IsVisble = false;
+		OnConfirm?.Invoke();
+		StateHasChanged();
+	}
+
+	private void Cancel()
+	{
+		m_IsVisble = false;
+		StateHasChanged();
+	}
+}
