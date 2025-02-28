@@ -12,7 +12,7 @@ namespace reportItWebApp
         public double Longitude { get; set; }
         public string Status {  get; set; }
         public string ReporterEmail { get; set; }
-        public string PhotoURL { get; set; }
+        public string PhotoUrl { get; set; }
         public string HandlerEmail { get; set; }
         
         [JsonConverter(typeof(FirestoreTimestampConverter))]
