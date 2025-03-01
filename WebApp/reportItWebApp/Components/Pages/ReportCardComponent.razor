@@ -19,18 +19,13 @@
 					<div class="mb-3 d-flex align-items-center">
 						<label class="form-label me-2"><strong>Status:</strong></label>
 						<InputSelect @bind-Value="@Status" class="form-select w-auto">
-							<option value="Open">Open</option>
-							<option value="In Progress">In Progress</option>
+							<option value="Pending">Pending</option>
+							<option value="Processing">Processing</option>
 							<option value="Resolved">Resolved</option>
 						</InputSelect>
 					</div>
-					<div class="mb-3">
-						<label class="form-label"><strong>Description</strong></label>
-						<InputTextArea @bind-Value="DescriptionText" dir="rtl"
-									   class="form-control"
-									   style="resize: block; min-height: 300px; max-height: 300px;" />
-					</div>
-					@if (IsManager)
+
+					@if(IsManager)
 					{
 						<div class="mb-3 d-flex align-items-center">
 							<label class="form-label me-2"><strong>Handler:</strong></label>
@@ -38,15 +33,22 @@
 						</div>
 					}
 
+					<div class="mb-3">
+						<label class="form-label"><strong>Description</strong></label>
+						<InputTextArea @bind-Value="DescriptionText" dir="rtl"
+									   class="form-control"
+									   style="resize: block; min-height: 300px; max-height: 300px;" />
+					</div>
+					
 					<button class="btn btn-primary w-100" @onclick="updateReport">
 						<i class="bi bi-save me-2"></i> Update Report
 					</button>
 					
 				</div>
 				<div class="col text-center">
-					@if (!string.IsNullOrEmpty(CurrentReport.PhotoURL))
+					@if (!string.IsNullOrEmpty(CurrentReport.PhotoUrl))
 					{
-						<img src="@CurrentReport.PhotoURL" class="img-fluid rounded shadow"
+						<img src="@CurrentReport.PhotoUrl" class="img-fluid rounded shadow"
 							 style="max-width: 100%; max-height: 600px; object-fit: cover;" />
 					}
 					else

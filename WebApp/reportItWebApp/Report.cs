@@ -11,18 +11,16 @@ namespace reportItWebApp
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Status {  get; set; }
-
-        [JsonPropertyName("submission_date")]
+        public string ReporterEmail { get; set; }
+        public string PhotoUrl { get; set; }
+        public string HandlerEmail { get; set; }
+        
         [JsonConverter(typeof(FirestoreTimestampConverter))]
         public DateTimeOffset SubmissionDate {  get; set; }
 
-        [JsonPropertyName("reporter_email")]
-        public string ReporterEmail { get; set; }
-        
-        [JsonPropertyName("photo_url")]
-        public string PhotoURL { get; set; }
-
-        public string HandlerEmail { get; set; }
-        
+        public override string ToString()
+        {
+            return string.Format($"[{Address}: {Status}]");
+        }
     }
 }

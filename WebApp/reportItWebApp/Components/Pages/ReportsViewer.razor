@@ -12,8 +12,8 @@
 					<label class="form-label me-2"><strong>Status:</strong></label>
 					<select @bind="m_SelectedStatus" class="form-control mb-3 w-auto">
 						<option value="">All Statuses</option>
-						<option value="Open">Open</option>
-						<option value="In Progress">In Progress</option>
+						<option value="Pending">Pending</option>
+						<option value="Processing">Processing</option>
 						<option value="Resolved">Resolved</option>
 					</select>
 				</div>
@@ -83,7 +83,7 @@
 	private MapComponent m_mapComponent;
 	private ReportCardComponent m_reportCard;
 	private string m_SelectedStatus;
-	private Nullable<DateTime> m_DateFrom;
+	private Nullable<DateTime> m_DateFrom = DateTime.Today.AddMonths(-1);
 	private Nullable<DateTime> m_DateTo = DateTime.Today;
 	private string m_TextSearchAddress = string.Empty;
 
@@ -105,12 +105,6 @@
 			m_DateTo = value;
 			StateHasChanged();
 		}
-	}
-
-	protected override void OnInitialized()
-	{
-		base.OnInitialized();
-		m_DateFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 	}
 
 	private async void reportSelected(Report i_SelectedReport)
