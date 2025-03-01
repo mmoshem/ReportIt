@@ -25,6 +25,22 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Get all reports
+router.get('/', async (req, res) => {
+  try {
+    console.log("getting users");
+    const reportsSnapshot = await db.collection('reports').get();
+    const reports = reportsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    res.status(200).send(reports);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 // Update a report
 router.put('/:id', async (req, res) => {
   try {

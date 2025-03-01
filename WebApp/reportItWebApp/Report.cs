@@ -17,7 +17,7 @@ namespace reportItWebApp
         
         [JsonConverter(typeof(FirestoreTimestampConverter))]
         public DateTimeOffset SubmissionDate {  get; set; }
-
+      
         public override string ToString()
         {
             return string.Format($"[{Address}: {Status}]");
