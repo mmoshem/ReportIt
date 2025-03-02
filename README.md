@@ -5,3 +5,9 @@ Currently, many municipalities lack an efficient way for citizens to report loca
 
 ## Purpose of the Project  
 The goal of this project is to develop a mobile application that enables citizens to easily report hazards to the municipality. Additionally, a web application will be created for municipality staff to view and manage these reports, ensuring faster and more effective resolution of local issues.
+
+## Video Tutorial
+Web app Tutorial:
+
+
+[![Watch the video](https://img.youtube.com/vi/pgdUVAE7qdI/0.jpg)](https://www.youtube.com/watch?v=pgdUVAE7qdI)
