@@ -13,4 +13,5 @@ Web app Tutorial:
 [![Watch the video](https://img.youtube.com/vi/pgdUVAE7qdI/0.jpg)](https://www.youtube.com/watch?v=pgdUVAE7qdI)
 
 Android app Tutorial:
-https://youtube.com/shorts/KB7mOc9xiiU?feature=share
+[![Watch the video](https://img.youtube.com/vi/KB7mOc9xiiU/0.jpg)](https://www.youtube.com/watch?v=KB7mOc9xiiU)
+
